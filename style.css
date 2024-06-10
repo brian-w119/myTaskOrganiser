@@ -1,0 +1,36 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: black;
+}
+
+
+.pageGrid{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    background-color: brown;
+    padding: 2px;
+    width: 70%;
+    margin: auto;
+    margin-top: 15vh;
+}
+
+.grid-item{
+    padding: 20px;
+    border: 2px solid black;
+    height: 70vh;
+    background-color: grey;
+}
+
+.taskNew{
+    background-color: green;
+    height: 3vh;
+    max-width: 7vw;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
