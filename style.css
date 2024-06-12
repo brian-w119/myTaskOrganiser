@@ -24,7 +24,8 @@ body{
     background-color: grey;
 }
 
-.taskNew{
+#taskNew{
+    margin-top: 8.5vh;
     background-color: green;
     height: 3vh;
     max-width: 7vw;
@@ -32,5 +33,71 @@ body{
     margin-left: auto;
     margin-right: auto;
 }
+
+.grid1> #container{
+    display: block;
+    margin: auto;
+    margin-top: 4vh;
+    width: 15vw;
+    height: 38vh;
+    border: 2px solid black;
+    background-color: white;
+}
+
+ .buttonsLower{
+    display: flex;
+    width: 12vw;
+    display: block;
+    margin: auto;
+    margin-top: 2vh;
+}
+
+#enter{
+    background-color: blueviolet;
+    width: 2.8vw;
+    margin-left: 2.7vw;
+}
+
+#clear{
+    margin-left: 1vw;
+    width: 2.8vw;
+    background-color: red;
+}
+
+#container{
+    background-color: red;
+    width: 1.5vw;
+}
+
+#date, #priority, #title{
+  width: 9.7vw;
+  text-align: center;
+}
+
+input, select{
+    display: block;
+    margin: auto;
+}
+
+#details{
+    max-height: 10vh;
+    max-width: 9vw;
+    word-wrap: break-word;
+    overflow-y: scroll;
+}
+
+#titleHeader{
+    margin-top: 5vh;
+}
+
+
+
+
+
+
+
+
+
+
 
 
