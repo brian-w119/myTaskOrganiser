@@ -9,6 +9,7 @@ const taskReminder = {
    container: document.querySelector("#container"),
    enter: document.querySelector("#enter"),
    clear: document.querySelector("#clear"),
+   enterClearBox: document.querySelector(".buttonsLower"),
 
    //creates new element
    newElement(type) {
@@ -33,9 +34,28 @@ const taskReminder = {
       },
    },
 
+   defaultCondition() {
+      //removes input fields, enter and clear buttons
+      const buttons = [this.container, this.enterClearBox];
+      for (let i = 0; i < buttons.length; i++) {
+         this.grid1.removeChild(buttons[i]);
+      }
+   },
+
+   //adds user input field to the DOM
+   addInterface() {
+      const buttons = [this.container, this.enterClearBox];
+      for (let i = 0; i < buttons.length; i++) {
+         this.grid1.appendChild(buttons[i]);
+      }
+   },
+
    init() {
+      window.addEventListener("load", () => {
+         this.defaultCondition();
+      });
       this.newTask.addEventListener("click", () => {
-         this.createForm();
+         this.addInterface();
       });
    },
 };
