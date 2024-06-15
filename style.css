@@ -34,12 +34,19 @@ body{
     margin-right: auto;
 }
 
+#taskNew:hover{
+background-color: rgb(72, 112, 72);
+color: white;
+transform: scale(1.1, 1.1);
+}
+
 .grid1> #container{
     display: block;
     margin: auto;
     margin-top: 4vh;
+    margin-bottom: 4vh;
     width: 15vw;
-    height: 38vh;
+    height: 40vh;
     border: 2px solid black;
     background-color: white;
     background-color: rgb(109, 102, 116);
@@ -59,10 +66,22 @@ body{
     margin-left: 2.7vw;
 }
 
+#enter:hover{
+background-color: rgb(90, 71, 107);
+color: white;
+transform: scale(1.1, 1.1);
+}
+
 #clear{
     margin-left: 1vw;
     width: 2.8vw;
     background-color: red;
+}
+
+#clear:hover{
+    background-color: rgb(131, 78, 78);
+    color: white;
+    transform: scale(1.1, 1.1);
 }
 
 
@@ -82,7 +101,7 @@ input, select{
     margin-right: auto;
     height: 7vh;
     width: 10vw;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-wrap: break-word;
     resize: none;
 }
@@ -107,6 +126,8 @@ input, select{
     border: 1px solid black;
     background-color: beige;
     border: 2px solid black;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .heading{
@@ -114,6 +135,8 @@ input, select{
     min-height: 3vh;
     font-size: x-large;
     text-align: center;
+    top: 0;
+    position: sticky;
 }
 
 .pLow{
@@ -133,6 +156,66 @@ h1{
     text-align: center;
     margin-top: 5%;
 }
+
+.inputInfo{
+   display: block;
+    width: 11.7vw;
+    min-height: 12vh;
+    background-color: lightgrey;
+    border: 1px solid black;
+    margin-top: 2vh;
+    
+}
+
+
+#wipe{
+    width: 6vw;
+    height: 6vh;
+    background-color: GREY;
+    position: absolute;
+    right: 2vw;
+    top: 50%;
+
+}
+
+#wipe:hover{
+    background-color: rgb(95, 68, 68);
+    color: white;
+    transform: scale(1.1, 1.1);
+}
+
+#confirm{
+    width: 6vw;
+    height: 6vh;
+    background-color: red;
+    position: absolute;
+    right: 2vw;
+    top: 50%;
+
+}
+
+#wipeText{
+    text-align: center;
+    margin-top: 0.7vh;
+}
+
+#wipeBox{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1vh;
+}
+
+#yes:hover{
+    background-color: green;
+    color: white;
+}
+
+#no:hover{
+    background-color: brown;
+    color: white;
+}
+
+
 
 
 

@@ -5,17 +5,25 @@ const taskReminder = {
    details: document.querySelector("#details"),
    dueDate: document.querySelector("#date"),
    form: document.querySelector("#form"),
-   priority: document.querySelector("#details"),
+   priority: document.querySelector("#priority"),
    newTask: document.querySelector("#taskNew"),
    container: document.querySelector("#container"),
    enter: document.querySelector("#enter"),
    clear: document.querySelector("#clear"),
    enterClearBox: document.querySelector(".buttonsLower"),
    pendingTasks: document.querySelector(".pendingTasks"),
+   lowPriority: document.querySelector(".lowP"),
+   medPriority: document.querySelector(".medP"),
+   highPriority: document.querySelector(".highP"),
+   wipeConfirmBox: document.querySelector("#confirm"),
+   wipeAll: document.querySelector("#wipe"),
+   no: document.querySelector("#no"),
+   yes: document.querySelector("#yes"),
+   currentInputArr: [],
 
    //creates new element
    newElement(type) {
-      const newItem = document.createElement("type");
+      const newItem = document.createElement(type);
       return newItem;
    },
 
@@ -49,19 +57,18 @@ const taskReminder = {
 
    //captures data from input field
    captureInputData() {
-      const arr = [];
+      let arr = [];
+      this.currentInputArr = [];
+
       this.enter.addEventListener("click", () => {
-         const input = [
+         arr = [
             this.title.value,
             this.details.value,
             this.dueDate.value,
             this.priority.value,
          ];
-
-         for (let i = 0; i < input.length; i++) {
-            arr.push(input[i]);
-         }
-         console.log(arr);
+         this.currentInputArr = [...arr];
+         console.log(this.currentInputArr);
       });
    },
 
@@ -72,15 +79,66 @@ const taskReminder = {
       });
    },
 
+   //transfers input data from form to priority columns
+   inputToPriority() {
+      const priority = this.currentInputArr[3];
+      const box = this.newElement("div");
+      box.classList.add("inputInfo");
+
+      for (let i = 0; i < 4; i++) {
+         const newDiv = this.newElement("div");
+         newDiv.classList.add("transferredInput");
+         console.log(newDiv);
+         newDiv.innerText = this.currentInputArr[i];
+         box.appendChild(newDiv);
+      }
+      console.log(box);
+
+      switch (priority) {
+         case "low":
+            this.lowPriority.appendChild(box);
+            break;
+         case "medium":
+            this.medPriority.appendChild(box);
+            break;
+         case "high":
+            this.highPriority.appendChild(box);
+            break;
+      }
+   },
+
+   clearAllPriorities() {
+      //adds the confirmation box to the screen
+      this.wipeAll.addEventListener("click", () => {
+         document.body.appendChild(this.wipeConfirmBox);
+      });
+
+      this.no.addEventListener("click", () => {
+         document.body.removeChild(this.wipeConfirmBox);
+      });
+
+      const columns = [this.lowPriority, this.medPriority, this.highPriority];
+      this.yes.addEventListener("click", () => {
+         for (let i = 0; i < columns.length; i++) {
+            columns[i].innerHTML = null;
+         }
+      });
+   },
+
    init() {
       window.addEventListener("load", () => {
          this.defaultCondition();
+         document.body.removeChild(this.wipeConfirmBox);
       });
       this.newTask.addEventListener("click", () => {
          this.addInterface();
       });
       this.captureInputData();
       this.clearInputFields();
+      this.clearAllPriorities();
+      this.enter.addEventListener("click", () => {
+         this.inputToPriority();
+      });
    },
 };
 taskReminder.init();

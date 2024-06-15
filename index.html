@@ -13,7 +13,7 @@
             <button id="taskNew">+ New Task</button>
             <div id="container">
                <form id="form" action="">
-                  <label for="title">Title</label>
+                  <label class="test" for="title">Title</label>
                   <input type="text" id="title" name="title" value=""></br></br>
                   <label for="details">Details</label></br>
                   <textarea  id="details" name="details" rows="5" cols="6"></textarea></br></br>
@@ -24,7 +24,7 @@
                      <option value="">Choose Priority</option>
                      <option value="low">Low</option>
                      <option value="medium">Medium</option>
-                     <option value="High">High</option>
+                     <option value="high">High</option>
                   </select>
                </form>
             </div>
@@ -48,6 +48,15 @@
          </div>
       </div>
 
-      <script src="script.js"></script>
+      <button id="wipe">CLEAR ALL</button>
+      <div id="confirm">
+         <div id="wipeText">Are You Sure?</div>
+         <div id="wipeBox">
+            <button id="yes">Yes</button>
+            <button id="no">No</button>
+         </div>
+      </div>
+      <script src="script.js">
+      </script>
    </body>
 </html>
