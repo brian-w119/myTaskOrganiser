@@ -159,8 +159,8 @@ h1{
 
 .inputInfo{
    display: block;
-    width: 11.7vw;
-    min-height: 12vh;
+    width: 100%;
+    height: auto;
     background-color: lightgrey;
     border: 1px solid black;
     margin-top: 2vh;
@@ -214,6 +214,15 @@ h1{
     background-color: brown;
     color: white;
 }
+
+.transferredInput{
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    text-align: center;
+    height: auto;
+    overflow-wrap: break-word;
+}
+
 
 
 

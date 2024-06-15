@@ -85,7 +85,7 @@ const taskReminder = {
       const box = this.newElement("div");
       box.classList.add("inputInfo");
 
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 3; i++) {
          const newDiv = this.newElement("div");
          newDiv.classList.add("transferredInput");
          console.log(newDiv);
@@ -129,9 +129,11 @@ const taskReminder = {
       window.addEventListener("load", () => {
          this.defaultCondition();
          document.body.removeChild(this.wipeConfirmBox);
+         document.body.removeChild(this.wipeAll);
       });
       this.newTask.addEventListener("click", () => {
          this.addInterface();
+         document.body.appendChild(this.wipeAll);
       });
       this.captureInputData();
       this.clearInputFields();
