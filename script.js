@@ -20,6 +20,9 @@ const taskReminder = {
    no: document.querySelector("#no"),
    yes: document.querySelector("#yes"),
    currentInputArr: [],
+   headingLow: document.querySelector(".lowP"),
+   headingMed: document.querySelector(".medP"),
+   headingHigh: document.querySelector(".highP"),
 
    //creates new element
    newElement(type) {
@@ -88,11 +91,17 @@ const taskReminder = {
       for (let i = 0; i < 3; i++) {
          const newDiv = this.newElement("div");
          newDiv.classList.add("transferredInput");
-         console.log(newDiv);
+
+         if (i % 2 === 0) {
+            newDiv.style.backgroundColor = "grey";
+         } else {
+            newDiv.style.backgroundColor = "lightGrey";
+         }
+         // console.log(newDiv);
          newDiv.innerText = this.currentInputArr[i];
          box.appendChild(newDiv);
       }
-      console.log(box);
+      // console.log(box);
 
       switch (priority) {
          case "low":
@@ -122,7 +131,28 @@ const taskReminder = {
          for (let i = 0; i < columns.length; i++) {
             columns[i].innerHTML = null;
          }
+         document.body.removeChild(this.wipeConfirmBox);
       });
+   },
+
+   //recreates and adds the priority headings back to the the top of the columns after all column contents have been deleted
+   addHeadings() {
+      const columnHeading = [
+         this.headingLow,
+         this.headingMed,
+         this.headingHigh,
+      ];
+      const heading = ["Low Priority", "Medium Priority", "High Priority"];
+      const classIdentifiers = ["pLow", "pMed", "pHigh"];
+
+      for (let i = 0; i < columnHeading.length; i++) {
+         const div = this.newElement("div");
+         div.classList.add(classIdentifiers[i]);
+         div.classList.add("heading");
+         div.innerText = heading[i];
+         columnHeading[i].appendChild(div);
+         console.log(div);
+      }
    },
 
    init() {
@@ -138,6 +168,10 @@ const taskReminder = {
       this.captureInputData();
       this.clearInputFields();
       this.clearAllPriorities();
+      this.yes.addEventListener("click", () => {
+         this.addHeadings();
+         alert("OK OK");
+      });
       this.enter.addEventListener("click", () => {
          this.inputToPriority();
       });
