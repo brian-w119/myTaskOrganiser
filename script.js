@@ -23,6 +23,8 @@ const taskReminder = {
    headingLow: document.querySelector(".lowP"),
    headingMed: document.querySelector(".medP"),
    headingHigh: document.querySelector(".highP"),
+   activeTask: null,
+   task: 0,
 
    //creates new element
    newElement(type) {
@@ -84,6 +86,7 @@ const taskReminder = {
 
    //transfers input data from form to priority columns
    inputToPriority() {
+      this.task += 1;
       const priority = this.currentInputArr[3];
       const box = this.newElement("div");
       box.classList.add("inputInfo");
@@ -101,7 +104,6 @@ const taskReminder = {
          newDiv.innerText = this.currentInputArr[i];
          box.appendChild(newDiv);
       }
-      // console.log(box);
 
       switch (priority) {
          case "low":
@@ -114,6 +116,53 @@ const taskReminder = {
             this.highPriority.appendChild(box);
             break;
       }
+      this.mouseOverEvent(box, this.task);
+   },
+
+   mouseOverEvent(element, task) {
+      element.addEventListener("mousedown", () => {
+         element.id = `Task${task}`;
+         console.log("MOUSE DOWN");
+         this.taskReAssign();
+      });
+   },
+
+   taskReAssign() {
+      const newDiv = this.newElement("div");
+      newDiv.id = "reAssign";
+      this.grid2.appendChild(newDiv);
+      console.log("new div appended");
+
+      //container to hold task re-assign buttons
+      const div2 = this.newElement("div");
+      div2.id = "reAssign2";
+      newDiv.appendChild(div2);
+
+      //text instructing user
+      const text = this.newElement("div");
+      text.id = "h2Text";
+      text.innerText = "Change Priority";
+      newDiv.appendChild(text);
+
+      //creation of buttons to change task's priority
+      const buttons = ["Low", "Med", "High"];
+      for (let i = 0; i < 3; i++) {
+         const button = this.newElement("button");
+         button.id = `${buttons[i]}`;
+         button.innerText = buttons[i];
+         //button.style.hover = "transform(scale(1.2, 1.2))";
+         div2.appendChild(button);
+      }
+
+      //create reAssign window close button and function
+      const button = this.newElement("button");
+      button.id = "closeReAssign";
+      button.innerText = "X";
+      newDiv.appendChild(button);
+
+      button.addEventListener("click", () => {
+         this.grid2.removeChild(newDiv);
+      });
    },
 
    clearAllPriorities() {
@@ -150,10 +199,20 @@ const taskReminder = {
          div.classList.add(classIdentifiers[i]);
          div.classList.add("heading");
          div.innerText = heading[i];
+         div.draggable = "true";
          columnHeading[i].appendChild(div);
          console.log(div);
       }
    },
+   /*
+   taskZoom() {
+      // const thisTask = document.querySelectorAll(".inputInfo");
+      this.thisTask.forEach((element) => {
+         element.addEventListener("mouseover", () => console.log("ok"));
+      });
+      console.log(this.thisTask);
+   },
+   */
 
    init() {
       window.addEventListener("load", () => {
@@ -170,7 +229,6 @@ const taskReminder = {
       this.clearAllPriorities();
       this.yes.addEventListener("click", () => {
          this.addHeadings();
-         alert("OK OK");
       });
       this.enter.addEventListener("click", () => {
          this.inputToPriority();

@@ -140,11 +140,11 @@ input, select{
 }
 
 .pLow{
-    background-color: rgb(231, 220, 222);
+    background-color: rgb(206, 155, 164);
 }
 
 .pMed{
-    background-color: rgb(214, 77, 77);
+    background-color: rgb(187, 100, 100);
 }
 
 .pHigh{
@@ -186,7 +186,7 @@ h1{
 #confirm{
     width: 6vw;
     height: 6vh;
-    background-color: red;
+    background-color: rgb(253, 2, 2);
     position: absolute;
     right: 2vw;
     top: 50%;
@@ -220,6 +220,79 @@ h1{
     height: auto;
     overflow-wrap: break-word;
 }
+
+#reAssign{
+    background-color: rgb(136, 127, 127);
+    width: 40vw;
+    height: 70vh;
+    position: absolute;
+    top: 24vh;
+    width: 47vw;
+}
+
+#reAssign2{
+    background-color: grey;
+    width: 20vw;
+    height: 5vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-top: 30%;
+    margin-bottom: 50%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#reAssign2 > *{
+    width: 25%;
+}
+
+#reAssign2 > *:hover{
+transform: scale(1.2, 1.2);
+color: white;
+background-color: green;
+}
+
+#closeReAssign{
+    min-width: 2vw;
+    min-height: 2vh;
+    background-color: red;
+    position: absolute;
+    top: 3vh;
+    right: 3vw;
+    font-size: larger;
+}
+
+#closeReAssign:hover{
+    transform: scale(1.1, 1.1);
+    color: white;
+    background-color: green;
+}
+
+#Low{
+    background-color: rgb(206, 155, 164);
+}
+
+#Med{
+    background-color: rgb(187, 100, 100);
+}
+
+#High{
+    background-color: rgb(180, 5, 5);
+}
+
+#h2Text{
+    min-width: 20%;
+    color: white;
+    position: absolute;
+    display: block;
+    top: 10vh;
+   margin-right: 50%;
+   margin-left: 43%;
+   font-size: x-large;
+}
+
+
 
 
 
