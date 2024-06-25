@@ -24,6 +24,7 @@ const taskReminder = {
    headingMed: document.querySelector(".medP"),
    headingHigh: document.querySelector(".highP"),
    activeTask: null,
+   // taskId: null,
    task: 0,
 
    //creates new element
@@ -162,7 +163,17 @@ const taskReminder = {
 
       button.addEventListener("click", () => {
          this.grid2.removeChild(newDiv);
+         this.removeTaskId(button);
       });
+   },
+
+   //removes task id
+   removeTaskId(close) {
+      const taskId = document.querySelectorAll(".inputInfo");
+      for (let i = 0; i < taskId.length; i++) {
+         taskId[i].removeAttribute("id");
+      }
+      console.log("close clicked");
    },
 
    clearAllPriorities() {
