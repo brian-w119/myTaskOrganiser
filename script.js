@@ -24,7 +24,10 @@ const taskReminder = {
    headingMed: document.querySelector(".medP"),
    headingHigh: document.querySelector(".highP"),
    activeTask: null,
-   // taskId: null,
+   priorityChange: null,
+
+   //container to house priority change button
+   buttonContiner: null,
    task: 0,
 
    //creates new element
@@ -125,6 +128,7 @@ const taskReminder = {
          element.id = `Task${task}`;
          console.log("MOUSE DOWN");
          this.taskReAssign();
+         this.loopOver();
       });
    },
 
@@ -146,13 +150,20 @@ const taskReminder = {
       newDiv.appendChild(text);
 
       //creation of buttons to change task's priority
-      const buttons = ["Low", "Med", "High"];
+      let priorityL;
+      let priorityM;
+      let priorityH;
+      const buttons = [priorityL, priorityM, priorityH];
+      const buttonId = ["Low", "Med", "High"];
+      const buttonsArr = [];
+
       for (let i = 0; i < 3; i++) {
-         const button = this.newElement("button");
-         button.id = `${buttons[i]}`;
-         button.innerText = buttons[i];
+         buttons[i] = this.newElement("button");
+         buttons[i].id = `${buttonId[i]}`;
+         buttonsArr.push(buttons[i]);
+         buttons[i].innerText = buttonId[i];
          //button.style.hover = "transform(scale(1.2, 1.2))";
-         div2.appendChild(button);
+         div2.appendChild(buttons[i]);
       }
 
       //create reAssign window close button and function
@@ -164,10 +175,40 @@ const taskReminder = {
       button.addEventListener("click", () => {
          this.grid2.removeChild(newDiv);
          this.removeTaskId(button);
+         //this.priorityChange = null;
       });
+      this.priorityChange = 1;
+      console.log(buttonsArr, this.priorityChange);
+      //const reAssignNodes = document.querySelector("#reAssign");
+      // console.log(reAssignNodes.childNodes.length);
+      return buttonsArr;
    },
 
-   //removes task id
+   loopOver() {
+      const low = document.querySelector("#Low");
+      const med = document.querySelector("#Med");
+      const high = document.querySelector("#High");
+
+      const buttons = [low, med, high];
+      for (let i = 0; i < 3; i++) {
+         buttons[i].addEventListener("click", () => {
+            switch (buttons[i]) {
+               case low:
+                  console.log("low clicked");
+                  break;
+               case med:
+                  console.log("medium clicked");
+                  break;
+               case high:
+                  console.log("high clicked");
+            }
+         });
+      }
+      //this.priorityL.addEventListener("click", alert("hello"));
+      console.log("loop over activated");
+   },
+
+   //removes task's id
    removeTaskId(close) {
       const taskId = document.querySelectorAll(".inputInfo");
       for (let i = 0; i < taskId.length; i++) {
@@ -215,15 +256,6 @@ const taskReminder = {
          console.log(div);
       }
    },
-   /*
-   taskZoom() {
-      // const thisTask = document.querySelectorAll(".inputInfo");
-      this.thisTask.forEach((element) => {
-         element.addEventListener("mouseover", () => console.log("ok"));
-      });
-      console.log(this.thisTask);
-   },
-   */
 
    init() {
       window.addEventListener("load", () => {
