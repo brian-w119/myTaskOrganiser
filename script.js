@@ -24,10 +24,7 @@ const taskReminder = {
    headingMed: document.querySelector(".medP"),
    headingHigh: document.querySelector(".highP"),
    activeTask: null,
-   priorityChange: null,
-
-   //container to house priority change button
-   buttonContiner: null,
+   storageArr: [],
    task: 0,
 
    //creates new element
@@ -92,6 +89,10 @@ const taskReminder = {
    inputToPriority() {
       this.task += 1;
       const priority = this.currentInputArr[3];
+      this.addStyling(priority);
+   },
+
+   addStyling(priority) {
       const box = this.newElement("div");
       box.classList.add("inputInfo");
 
@@ -120,19 +121,38 @@ const taskReminder = {
             this.highPriority.appendChild(box);
             break;
       }
+      this.storageArr.push(this.currentInputArr);
       this.mouseOverEvent(box, this.task);
+      // this.priorityChange(box);
    },
 
    mouseOverEvent(element, task) {
       element.addEventListener("mousedown", () => {
          element.id = `Task${task}`;
          console.log("MOUSE DOWN");
-         this.taskReAssign();
-         this.loopOver();
+         this.taskReAssign(element);
       });
    },
+   //
+   updateLocalStorage() {
+      const data = JSON.stringify(this.storageArr);
+      localStorage.setItem("input", data);
+   },
 
-   taskReAssign() {
+   //retrieves data and writes to columns
+   retrieveLocalStorage() {
+      const data = localStorage.getItem("input");
+      const outputData = JSON.parse(data);
+      console.log(outputData);
+
+      for (const output of outputData) {
+         this.currentInputArr = output;
+         const priority = output[3];
+         this.addStyling(priority);
+      }
+   },
+
+   taskReAssign(element) {
       const newDiv = this.newElement("div");
       newDiv.id = "reAssign";
       this.grid2.appendChild(newDiv);
@@ -150,21 +170,15 @@ const taskReminder = {
       newDiv.appendChild(text);
 
       //creation of buttons to change task's priority
-      let priorityL;
-      let priorityM;
-      let priorityH;
-      const buttons = [priorityL, priorityM, priorityH];
-      const buttonId = ["Low", "Med", "High"];
-      const buttonsArr = [];
-
+      const buttons = ["Low", "Med", "High"];
       for (let i = 0; i < 3; i++) {
-         buttons[i] = this.newElement("button");
-         buttons[i].id = `${buttonId[i]}`;
-         buttonsArr.push(buttons[i]);
-         buttons[i].innerText = buttonId[i];
+         const button = this.newElement("button");
+         button.id = `${buttons[i]}`;
+         button.innerText = buttons[i];
          //button.style.hover = "transform(scale(1.2, 1.2))";
-         div2.appendChild(buttons[i]);
+         div2.appendChild(button);
       }
+      this.priorityChange(element);
 
       //create reAssign window close button and function
       const button = this.newElement("button");
@@ -174,47 +188,29 @@ const taskReminder = {
 
       button.addEventListener("click", () => {
          this.grid2.removeChild(newDiv);
-         this.removeTaskId(button);
-         //this.priorityChange = null;
       });
-      this.priorityChange = 1;
-      console.log(buttonsArr, this.priorityChange);
-      //const reAssignNodes = document.querySelector("#reAssign");
-      // console.log(reAssignNodes.childNodes.length);
-      return buttonsArr;
    },
 
-   loopOver() {
+   priorityChange(element) {
+      const container = document.querySelector("#reAssign");
       const low = document.querySelector("#Low");
       const med = document.querySelector("#Med");
       const high = document.querySelector("#High");
 
       const buttons = [low, med, high];
-      for (let i = 0; i < 3; i++) {
-         buttons[i].addEventListener("click", () => {
-            switch (buttons[i]) {
-               case low:
-                  console.log("low clicked");
-                  break;
-               case med:
-                  console.log("medium clicked");
-                  break;
-               case high:
-                  console.log("high clicked");
+      for (const button of buttons) {
+         button.addEventListener("click", () => {
+            if (button === low) {
+               this.lowPriority.appendChild(element);
+            } else if (button === med) {
+               this.medPriority.appendChild(element);
+            } else {
+               this.highPriority.appendChild(element);
             }
+            //removes pop up screen when priority has been changed
+            this.grid2.removeChild(container);
          });
       }
-      //this.priorityL.addEventListener("click", alert("hello"));
-      console.log("loop over activated");
-   },
-
-   //removes task's id
-   removeTaskId(close) {
-      const taskId = document.querySelectorAll(".inputInfo");
-      for (let i = 0; i < taskId.length; i++) {
-         taskId[i].removeAttribute("id");
-      }
-      console.log("close clicked");
    },
 
    clearAllPriorities() {
@@ -272,9 +268,16 @@ const taskReminder = {
       this.clearAllPriorities();
       this.yes.addEventListener("click", () => {
          this.addHeadings();
+         localStorage.clear();
       });
       this.enter.addEventListener("click", () => {
          this.inputToPriority();
+         this.updateLocalStorage();
+      });
+      window.addEventListener("load", () => {
+         this.retrieveLocalStorage();
+         this.addInterface();
+         document.body.appendChild(this.wipeAll);
       });
    },
 };
