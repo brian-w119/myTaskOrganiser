@@ -149,8 +149,29 @@ const taskReminder = {
          console.log("task id: ", element.id);
          this.taskReAssign(element);
          console.log(this.storageArr);
+         this.priorityChangePt2(element);
       });
    },
+   //updates localStorage on task priority change
+   localStorageUpdate(elementID, newPriority) {
+      const tempArr = [...this.storageArr];
+      for (let i = 0; i < tempArr.length; i++) {
+         if (tempArr[i].includes(elementID)) {
+            this.storageArr = [];
+            tempArr[3] = newPriority;
+            this.storageArr = [...tempArr];
+            console.log("Storage array re-written: ", this.storageArr);
+         }
+      }
+   },
+   /*
+   //priority buttons calling function to update localStorage
+   priorityChange() {
+      const low = document.querySelector("#Low");
+      const med = document.querySelector("#Med");
+      co
+      */
+
    //
    updateLocalStorage() {
       const data = JSON.stringify(this.storageArr);
@@ -214,13 +235,26 @@ const taskReminder = {
          this.grid2.removeChild(newDiv);
       });
    },
+   selectPriButtons() {
+      const low = document.querySelector("#Low");
+      const med = document.querySelector("#Med");
+      const high = document.querySelector("#High");
+      return [low, med, high];
+   },
 
    priorityChange(element) {
+      let tempStorage = [];
       const container = document.querySelector("#reAssign");
+      /*
       const low = document.querySelector("#Low");
       const med = document.querySelector("#Med");
       const high = document.querySelector("#High");
       console.log(this.task);
+      */
+      const priButtons = this.selectPriButtons();
+      const low = priButtons[0];
+      const med = priButtons[1];
+      const high = priButtons[2];
 
       const buttons = [low, med, high];
       for (const button of buttons) {
@@ -229,23 +263,77 @@ const taskReminder = {
                this.lowPriority.appendChild(element);
                element.classList.remove("medPri", "highPri");
                element.classList.add("inputInfo", "lowPri");
-               this.currentInputArr[3] = "low";
+               //this.currentInputArr[3] = "low";
             } else if (button === med) {
                this.medPriority.appendChild(element);
                element.classList.remove("highPri", "lowPri");
                element.classList.add("inputInfo", "medPri");
-               this.currentInputArr[3] = "medium";
+               // this.currentInputArr[3] = "medium";
             } else {
                this.highPriority.appendChild(element);
                element.classList.remove("lowPri", "medPri");
                element.classList.add("inputInfo", "highPri");
-               this.currentInputArr[3] = "high";
+               //this.currentInputArr[3] = "high";
             }
             //removes pop up screen when priority has been changed
             this.grid2.removeChild(container);
             console.log(element, "element on priority change");
             console.log(this.currentInputArr);
          });
+      }
+   },
+
+   //updates local storage on priority change
+   priorityChangePt2(element) {
+      let tempStorage = [...this.currentInputArr];
+      const priButtons = this.selectPriButtons();
+      const low = priButtons[0];
+      const med = priButtons[1];
+      const high = priButtons[2];
+
+      const buttons = [low, med, high];
+
+      for (const button of buttons) {
+         button.addEventListener("click", () => {
+            switch (button) {
+               case low:
+                  console.log("low pressed: ", element.id);
+                  /*
+                  for (const thisIndex of tempStorage) {
+                     if (thisIndex.includes(element.id)) {
+                        thisIndex[3] = "low";
+                        this.currentInputArr = [];
+                        this.storageArr = [];
+                        localStorage.clear();
+                        this.storageArr = [...tempStorage];
+                        this.updateLocalStorage();
+                     }
+                  }
+                     */
+                  this.intFuncPriChange(tempStorage, element, "low");
+                  break;
+               case med:
+                  console.log("med pressed");
+                  this.intFuncPriChange(tempStorage, element, "med");
+                  break;
+               default:
+                  console.log("High pressed");
+                  this.intFuncPriChange(tempStorage, element, "high");
+            }
+         });
+      }
+   },
+
+   intFuncPriChange(arr, element, newPri) {
+      for (const thisIndex of arr) {
+         if (thisIndex.includes(element.id)) {
+            thisIndex[3] = newPri;
+            this.currentInputArr = [];
+            this.storageArr = [];
+            localStorage.clear();
+            this.storageArr = [...arr];
+            this.updateLocalStorage();
+         }
       }
    },
 
