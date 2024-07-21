@@ -292,6 +292,12 @@ background-color: green;
    font-size: x-large;
 }
 
+#deleTask{
+    width: 10vw;
+    height: 10vh;
+    background-color: red;
+}
+
 
 
 
